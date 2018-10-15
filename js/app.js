@@ -5,11 +5,11 @@
 // Let's model some Seattle beaches in code
 // Let's make note of the name, neighborhood, and seagull count of each beach for each day last week
 
-var days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+var hours = ['6am', '7am', '8am', '9am', '10am', '11am' , '12am', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm'];
 
-var alki = {
-  name: 'Alki Beach',
-  neighborhood: 'West Seattle',
+var 1stPike = {
+  name: '1st and Pike',
+  neighborhood: 'Seattle',
   seagullCount: [34, 77, 23, 347, 55, 72, 88]
 };
 
