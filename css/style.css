@@ -1,4 +1,10 @@
 h1, h2 {
   font-family: 'Srisakdi', cursive;
-  color: red;
+  color: rgb(165, 44, 44);
+}
+
+img {
+  float: right;
+  width: 50%;
+  padding: 10px;
 }
