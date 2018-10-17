@@ -61,7 +61,7 @@ cookieShop.prototype.render = function() {
   trEl.appendChild(tdEl);
 
   for (var j = 0; j < this.storeName.length; j++){
-   // thEl = document.createElement('th');
+    // thEl = document.createElement('th');
     thEl.textContent = this.storeName;
     trEl.appendChild(thEl);
   }
@@ -99,11 +99,41 @@ cookieShop.prototype.header = function() {
     trEl.appendChild(thEl);
   }
   thEl = document.createElement('th');
-  thEl.textContent = 'Daily Total';
+  thEl.textContent = 'Total ';
   trEl.appendChild(thEl);
 
   cookieTable.appendChild(trEl);
 }
+
+
+cookieShop.prototype.footer = function() {
+  var trEl = document.createElement('tr');
+  var thEl = document.createElement('th');
+  
+  thEl.textContent = '';
+  trEl.appendChild(thEl);
+
+  thEl = document.createElement('th');
+  thEl.textContent = 'Hourly Total';
+  trEl.appendChild(thEl);
+
+  // for(var k = 0; k < this.hours.length; k++){
+  //   this.totalCookies += this.cookiesEachHour[k];
+
+  
+  for (var i = 0; i < this.cookiesEachHour.length; i++){
+    var addall = 0;
+    thEl = document.createElement('th');
+    addall += this.cookiesEachHour[i];
+    thEl.textContent = addall;
+    trEl.appendChild(thEl);
+  }
+  cookieTable.appendChild(trEl);
+
+
+}
+
+
 
 
 function renderCookieStores() {
@@ -114,6 +144,7 @@ function renderCookieStores() {
 
 cookieShop.all[0].header();
 renderCookieStores()
+cookieShop.all[0].footer();
 
 
 
