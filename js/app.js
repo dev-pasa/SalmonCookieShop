@@ -1,11 +1,11 @@
 'use strict';
 
-cookieShop.all =[];
+CookieShop.all =[];
 
 //access table in the DOM
 var cookieTable = document.getElementById('cookieTable');
 
-function cookieShop(minCustomersPerHour, maxCustomersPerHour, avgCookiesPerCustomer, storeName) {
+function CookieShop(minCustomersPerHour, maxCustomersPerHour, avgCookiesPerCustomer, storeName) {
   this.minCustomersPerHour = Math.floor(minCustomersPerHour);
   this.maxCustomersPerHour = Math.floor(maxCustomersPerHour);
   this.avgCookiesPerCustomer = Math.ceil(avgCookiesPerCustomer);
@@ -14,41 +14,50 @@ function cookieShop(minCustomersPerHour, maxCustomersPerHour, avgCookiesPerCusto
   this.customersEachHour = [];
   this.cookiesEachHour = [];
   this.totalCookies = 0;
-  
-  function random(min,max){
-    return Math.floor(Math.random() * (max - min +1)) + min;
-  } 
+  CookieShop.all.push(this)
+}
+
+function random(min,max){
+  return Math.floor(Math.random() * (max - min +1)) + min;
+}
+
+
+CookieShop.prototype.getCustomersPerHour = function() {
   for(var i = 0; i < this.hours.length; i++){
     //calculate a random number
     var randomCustomers= random(this.minCustomersPerHour, this.maxCustomersPerHour);
-    //put random number in an array
+    //push random number in an array
     this.customersEachHour.push(randomCustomers);
   }
-  
+}
+
+CookieShop.prototype.getCookiesPerHour = function(){
   for(var j = 0; j < this.hours.length; j++){
     // calc the cookies
     var hourlyCookies = Math.ceil(this.customersEachHour[j] * this.avgCookiesPerCustomer);
-       
+
     // put the numbers into an array
     this.cookiesEachHour.push(hourlyCookies);
   }
+}
 
+CookieShop.prototype.getTotalCookies = function(){
   for(var k = 0; k < this.hours.length; k++){
     this.totalCookies += this.cookiesEachHour[k];
   }
-  cookieShop.all.push(this);
 }
-
-new cookieShop(23, 65, 6.3, '1st and Pike');
-new cookieShop(3, 24, 1.2, 'SeaTac Airport');
-new cookieShop(11, 38, 3.7, 'Seattle Center');
-new cookieShop(20, 38, 2.3, 'Capitol Hill');
-new cookieShop(2, 16, 4.6, 'Alki');
-
+new CookieShop(23, 65, 6.3, '1st and Pike');
+new CookieShop(3, 24, 1.2, 'SeaTac Airport');
+new CookieShop(11, 38, 3.7, 'Seattle Center');
+new CookieShop(20, 38, 2.3, 'Capitol Hill');
+new CookieShop(2, 16, 4.6, 'Alki');
 
 
-cookieShop.prototype.render = function() {
-  
+
+CookieShop.prototype.render = function() {
+  this.getCustomersPerHour();
+  this.getCookiesPerHour();
+  this.getTotalCookies();
   // make a tr
   var trEl = document.createElement('tr');
   //make a th
@@ -65,25 +74,24 @@ cookieShop.prototype.render = function() {
     thEl.textContent = this.storeName;
     trEl.appendChild(thEl);
   }
- 
 
   for (var i = 0; i < this.hours.length; i++) {
     tdEl = document.createElement('td');
     tdEl.textContent = this.cookiesEachHour[i];
     trEl.appendChild(tdEl);
   }
-  
+
   tdEl = document.createElement('td');
   tdEl.textContent = this.totalCookies;
   trEl.appendChild(tdEl);
 
- 
+
   cookieTable.appendChild(trEl);
 }
 
 
 
-cookieShop.prototype.header = function() {
+CookieShop.prototype.header = function() {
   var trEl = document.createElement('tr');
   var thEl = document.createElement('th');
   thEl.textContent = '';
@@ -106,12 +114,10 @@ cookieShop.prototype.header = function() {
 }
 
 
-cookieShop.prototype.footer = function() {
+
+CookieShop.prototype.footer = function() {
   var trEl = document.createElement('tr');
   var thEl = document.createElement('th');
-  
-  thEl.textContent = '';
-  trEl.appendChild(thEl);
 
   thEl.textContent = '';
   trEl.appendChild(thEl);
@@ -119,48 +125,53 @@ cookieShop.prototype.footer = function() {
   thEl = document.createElement('th');
   thEl.textContent = 'Hourly Total';
   trEl.appendChild(thEl);
+  var addTotal = 0;
 
-  
   for (var i = 0; i < this.cookiesEachHour.length; i++){
     var addall = 0;
     thEl = document.createElement('th');
-    for (let j = 0; j < cookieShop.all.length; j++) {
-      addall += cookieShop.all[j].cookiesEachHour[i];
+    for (let j = 0; j < CookieShop.all.length; j++) {
+      addall += CookieShop.all[j].cookiesEachHour[i];
+      // console.log(addall, i)
     }
+    addTotal += addall;
+    // thEl = document.createElement('th')
+
     thEl.textContent = addall;
     trEl.appendChild(thEl);
   }
-
-  
-  var addTotal = 0;
-    
-  for (let b = 0; b < cookieShop.all.length; b++) {
-    addTotal += cookieShop.all[b].totalCookies;
-    
-    thEl.textContent = addTotal;
-    trEl.appendChild(thEl);
-  }
-
-
+  // create new element for total of totals
+  var thEl2 = document.createElement('th');
+  // adding the total of totals to content
+  thEl2.textContent = addTotal;
+  trEl.appendChild(thEl2);
   cookieTable.appendChild(trEl);
 }
 
+
+
 function renderCookieStores() {
-  for(var i = 0; i < cookieShop.all.length; i++) {
-    cookieShop.all[i].render();
+  console.log('in render cookie',CookieShop.all.length)
+
+  for(var i = 0; i < CookieShop.all.length; i++) {
+    if(i > 7) break;
+    // console
+    console.log('in for loop', i ,CookieShop.all[i])
+    CookieShop.all[i].render();
+
   }
 }
-
-cookieShop.all[0].header();
-renderCookieStores()
-cookieShop.all[0].footer();
+CookieShop.all[0].header();
+renderCookieStores();
+console.log('wont fire',CookieShop.all.length)
+CookieShop.all[0].footer();
 
 
 
 
 // function headerCookieStores() {
-//   for(var i = 4; i < cookieShop.all.length; i++) {
-//     cookieShop.all[i].header();
+//   for(var i = 4; i < CookieShop.all.length; i++) {
+//     CookieShop.all[i].header();
 //   }
 // }
 // headerCookieStores()
@@ -174,7 +185,7 @@ cookieShop.all[0].footer();
 //   maxCust: Math.floor(65),
 //   avgCookieSale: 6.3,
 //   totalCookies : 0,
-  
+
 //   getCustomersPerHour: function(min, max) {
 //     for (let i = 0; i < hours.length; i++) {
 //       this.customersPerHour.push(Math.floor(Math.random() * (max - min + 1)) + min)
@@ -227,7 +238,7 @@ cookieShop.all[0].footer();
 //   maxCust: Math.floor(24),
 //   avgCookieSale: 1.2,
 //   totalCookies : 0,
-  
+
 //   getCustomersPerHour: function(min, max) {
 //     for (let i = 0; i < hours.length; i++) {
 //       this.customersPerHour.push(Math.floor(Math.random() * (max - min + 1)) + min)
@@ -279,7 +290,7 @@ cookieShop.all[0].footer();
 //   maxCust: Math.floor(38),
 //   avgCookieSale: 3.7,
 //   totalCookies : 0,
-  
+
 //   getCustomersPerHour: function(min, max) {
 //     for (let i = 0; i < hours.length; i++) {
 //       this.customersPerHour.push(Math.floor(Math.random() * (max - min + 1)) + min)
@@ -331,7 +342,7 @@ cookieShop.all[0].footer();
 //   maxCust: Math.floor(38),
 //   avgCookieSale: 3.7,
 //   totalCookies : 0,
-  
+
 //   getCustomersPerHour: function(min, max) {
 //     for (let i = 0; i < hours.length; i++) {
 //       this.customersPerHour.push(Math.floor(Math.random() * (max - min + 1)) + min)
@@ -382,7 +393,7 @@ cookieShop.all[0].footer();
 //   maxCust: Math.floor(16),
 //   avgCookieSale: 4.6,
 //   totalCookies : 0,
-  
+
 //   getCustomersPerHour: function(min, max) {
 //     for (let i = 0; i < hours.length; i++) {
 //       this.customersPerHour.push(Math.floor(Math.random() * (max - min + 1)) + min)
