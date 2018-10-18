@@ -16,7 +16,8 @@ function CookieShop(minCustomersPerHour, maxCustomersPerHour, avgCookiesPerCusto
   this.customersEachHour = [];
   this.cookiesEachHour = [];
   this.totalCookies = 0;
-  CookieShopAll.unshift(this)
+  CookieShopAll.push(this)
+  // CookieShopAll.unshift(this)
 }
 
 new CookieShop(23, 65, 6.3, '1st and Pike');
@@ -29,6 +30,12 @@ function random(min,max){
   return Math.floor(Math.random() * (max - min +1)) + min;
 }
 
+function newElement(type, content, parent){
+  var element = document.createElement(type);
+  element.textContent = content;
+  parent.appendChild(element);
+}
+
 CookieShop.prototype.getCustomersPerHour = function() {
   for(var i = 0; i < hours.length; i++){
     //calculate a random number
@@ -39,14 +46,11 @@ CookieShop.prototype.getCustomersPerHour = function() {
 }
 
 CookieShop.prototype.getCookiesPerHour = function(){
-  
-  for(var j = 0; j < hours.length; j++){
+  for(var i = 0; i < hours.length; i++){
     // calc the cookies
-    var hourlyCookies = Math.ceil(this.customersEachHour[j] * this.avgCookiesPerCustomer);
-
+    var hourlyCookies = Math.ceil(this.customersEachHour[i] * this.avgCookiesPerCustomer);
     // put the numbers into an array
     this.cookiesEachHour.push(hourlyCookies);
-    
   }
 }
 
@@ -54,11 +58,6 @@ CookieShop.prototype.getTotalCookies = function(){
   for(var k = 0; k < hours.length; k++){
     this.totalCookies += this.cookiesEachHour[k];
   }}
-function newElement(type, content, parent){
-  var element = document.createElement(type);
-  element.textContent = content;
-  parent.appendChild(element);
-}
 
 CookieShop.prototype.header = function() {
   var trEl = document.createElement('tr');
@@ -106,7 +105,6 @@ function renderCookieStores() {
   }
 }
 
-//CookieShop(minCustomersPerHour, maxCustomersPerHour, avgCookiesPerCustomer, storeName)
 function handleForm(event){
   event.preventDefault();
   console.log(event.target.querySelector('input'));
@@ -122,6 +120,7 @@ function handleForm(event){
 }
 
 addStore.addEventListener('submit', handleForm);
+
 
 CookieShop.prototype.render = function() {
   this.getCustomersPerHour();
