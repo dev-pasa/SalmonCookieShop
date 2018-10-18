@@ -55,8 +55,8 @@ CookieShop.prototype.getCookiesPerHour = function(){
 }
 
 CookieShop.prototype.getTotalCookies = function(){
-  for(var k = 0; k < hours.length; k++){
-    this.totalCookies += this.cookiesEachHour[k];
+  for(var i = 0; i < hours.length; i++){
+    this.totalCookies += this.cookiesEachHour[i];
   }}
 
 CookieShop.prototype.header = function() {
@@ -107,16 +107,16 @@ function renderCookieStores() {
 
 function handleForm(event){
   event.preventDefault();
-  console.log(event.target.querySelector('input'));
+  console.log(event.target);
 
-  var minCust = event.target.querySelector('input[name="MinCustomers"]').value;
-  var maxCust = event.target.querySelector('input[name="MaxCustomers"]').value;
-  var avgCookiesCust = event.target.querySelector('input[name="AvgCookiesPerCust"]').value;
-  var storeInput = event.target.querySelector('intput[name="StoreName"]').value;
+  var minCust = event.target.MinCustomers.value;
+  var maxCust = event.target.MaxCustomers.value;
+  var avgCookiesCust = event.target.AvgCookiesPerCust.value;
+  var storeInput = event.target.StoreName.value;
 
   console.log(minCust,maxCust,avgCookiesCust, storeInput );
   new CookieShop(minCust, maxCust, avgCookiesCust, storeInput );
-  CookieShopAll[0].render();
+  CookieShopAll[CookieShopAll.length-1].render();
 }
 
 addStore.addEventListener('submit', handleForm);
