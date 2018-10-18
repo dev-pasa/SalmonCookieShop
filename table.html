@@ -1,9 +1,35 @@
+<!DOCTYPE html>
+<html>
 
-<h1>Pat's Salmon Cookies</h1>
+<head>
+<title>Data Table</title>
+ </head>
 
-<table id="cookieTable">
-</table>
+<body>
+  <h1>Pat's Salmon Cookies</h1>
 
+<form id="add-store">
+  <fieldset>
+    <legend>Adding stores in the table</legend>
+    
+    <label for="MinCustomers">Minimum Customers: </label>
+    <input name="MinCustomers" type="number" size="15" required />
 
-<script src="../SalmonCookieShop/js/app.js"></script>
-</body>
+    <label for="MaxCustomers">Maximum Customers: </label>
+    <input name="MaxCustomers" type="number" size="15" required />
+
+    <label for="AvgCookiesPerCust">Average Cookies Per Customer: </label>
+    <input name="AvgCookiesPerCust" type="number" size="15" required />
+
+    <label for="StoreName">Store Name: </label>
+    <input name="StoreName" type="text" size="15" required />
+
+    <button id="submit">Create new Store</button>
+  </fieldset>
+</form>
+
+  <table id="cookieTable"></table>
+
+  <script src="../SalmonCookieShop/js/app.js"></script>
+ </body>
+</html>
