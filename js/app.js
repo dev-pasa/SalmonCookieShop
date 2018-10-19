@@ -71,56 +71,6 @@ CookieShop.prototype.header = function() {
   cookieTable.appendChild(trEl);
 }
 
-CookieShop.prototype.footer = function() {
-  var trEl = document.createElement('tr');
-  //create document for th
-
-  var thEl = document.createElement('th');
-  thEl.textContent = '';
-  trEl.appendChild(thEl);
-  newElement('th', 'Hourly Total', trEl);
-
-  var addTotal = 0;
-  for (var i = 0; i < this.cookiesEachHour.length; i++){
-    var addall = 0;
-    thEl = document.createElement('th');
-    for (let j = 0; j < CookieShopAll.length; j++) {
-      addall += CookieShopAll[j].cookiesEachHour[i];
-    }
-    addTotal += addall;
-    thEl.textContent = addall;
-    trEl.appendChild(thEl);
-  }
-  // create new element for total of totals
-  newElement('th', addTotal, trEl);
-  cookieTable.appendChild(trEl);
-}
-
-function renderCookieStores() {
-  console.log('in render cookie',CookieShopAll.length)
-  for(var i = 0; i < CookieShopAll.length; i++) {
-    console.log('in for loop', i , CookieShopAll[i])
-    CookieShopAll[i].render();
-  }
-}
-
-function handleForm(event){
-  event.preventDefault();
-  console.log(event.target);
-
-  var minCust = event.target.MinCustomers.value;
-  var maxCust = event.target.MaxCustomers.value;
-  var avgCookiesCust = event.target.AvgCookiesPerCust.value;
-  var storeInput = event.target.StoreNew.value;
-
-  console.log(minCust,maxCust,avgCookiesCust, storeInput );
-  new CookieShop(minCust, maxCust, avgCookiesCust, storeInput );
-  CookieShopAll[CookieShopAll.length-1].render();
-}
-
-addStore.addEventListener('submit', handleForm);
-
-
 CookieShop.prototype.render = function() {
   this.getCustomersPerHour();
   this.getCookiesPerHour();
@@ -140,7 +90,59 @@ CookieShop.prototype.render = function() {
   newElement('tb', this.totalCookies, trEl);
   cookieTable.appendChild(trEl);
 }
+CookieShop.prototype.footer = function() {
+  // var tbEl = document.createElement('tr');
+  var tfEl = document.createElement('tfoot');
+  var tdEl = document.createElement('td');
+  
+  tfEl.appendChild(tdEl);
+  newElement('tfoot', 'Total', tfEl);
+  var addTotal = 0;
+  for (var i = 0; i < this.cookiesEachHour.length; i++){
+    var addall = 0;
+    tdEl = document.createElement('td');
+    for (let j = 0; j < CookieShopAll.length; j++) {
+      addall += CookieShopAll[j].cookiesEachHour[i];
+    }
+    addTotal += addall;
+    tdEl.textContent = addall;
+    tfEl.appendChild(tdEl);
+  }
+  newElement('td', addTotal, tfEl);
+  var tfoot = document.getElementById('cookieTableFoot');
+  tfoot.innerHTML = "";
+  tfoot.innerHTML = "";
+  // tfoot.appendChild(tfEl);
+  var trow = document.getElementById('cookieTable');
+  trow.appendChild(tfEl);
+  
+  // cookieTable.appendChild(tfEl);
+}
+function handleForm(event){
+  event.preventDefault();
+  console.log(event.target);
 
+  var minCust = event.target.MinCustomers.value;
+  var maxCust = event.target.MaxCustomers.value;
+  var avgCookiesCust = event.target.AvgCookiesPerCust.value;
+  var storeInput = event.target.StoreNew.value;
+
+  console.log(minCust,maxCust,avgCookiesCust, storeInput );
+  new CookieShop(minCust, maxCust, avgCookiesCust, storeInput );
+  CookieShopAll[CookieShopAll.length-1].render();
+  CookieShopAll[CookieShopAll.length-1].footer();
+}
+
+addStore.addEventListener('submit', handleForm);
+
+
+function renderCookieStores() {
+  console.log('in render cookie',CookieShopAll.length)
+  for(var i = 0; i < CookieShopAll.length; i++) {
+    console.log('in for loop', i , CookieShopAll[i])
+    CookieShopAll[i].render();
+  }
+}
 
 // addStore.addEventListener('submit', handleForm);
 CookieShopAll[0].header();
