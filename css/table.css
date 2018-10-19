@@ -1,0 +1,45 @@
+body{
+  font-family: 'Courier New', Courier, monospace;
+  background-image: url('../images/salmon-cookies-5.jpg');
+}
+
+
+table
+{
+    border: 7px double;
+    padding: 10px;
+    width: 55%;
+    font-size: 12pt;
+    font-weight: bold;
+    font-style: bold;
+    border-radius: 10px;
+    margin-top: 10%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+lable{
+  cursor: default;
+  font-style: bold;
+  font-weight: bold;
+  display: block;
+}
+input {
+  background-color: blanchedalmond;
+  width: 30%;
+  padding: 8px 10px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 3px solid #555;
+  background-repeat: no-repeat;
+}
+
+form {
+  position: relative;
+  font-weight: bold;
+  width  : 70%;
+  height : 8px 0;
+  margin : 0 auto;
+  font-style: bold;
+  background: #FFF url(../images/salmon-cookies-4.jpg);
+}
