@@ -9,11 +9,12 @@ h1, h2 {
   color: rgb(74, 15, 88);
 }
 
-img {
-  float: middle;
-  width: 15%;
-  padding: 10px;
+#top1 {
+  float:left;
+  width: 50px;
+  margin-right: 15px;
 }
+
 
 p{
   font-size: 13pt;
@@ -62,4 +63,8 @@ article{
 .topnav a.active {
   background-color: rgb(168, 87, 108);
   color: white;
+}
+
+#bottom{
+  line-height: -0.5;
 }
