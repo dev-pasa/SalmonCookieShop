@@ -1,6 +1,6 @@
 body{
   font-family: 'Courier New', Courier, monospace;
-  background-image: url('../images/salmon-cookies-5.jpg');
+  
 }
 
 
@@ -41,5 +41,5 @@ form {
   height : 8px 0;
   margin : 0 auto;
   font-style: bold;
-  background: #FFF url(../images/salmon-cookies-4.jpg);
+  background: #FFF url(/images/salmon-cookies-4.jpg);
 }
